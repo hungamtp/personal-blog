@@ -29,6 +29,7 @@ public class Post {
     private Long id;
 
     private String title;
+    private String content;
     private LocalDate createdAt;
     private LocalDate editedAt;
     private Boolean publish;
