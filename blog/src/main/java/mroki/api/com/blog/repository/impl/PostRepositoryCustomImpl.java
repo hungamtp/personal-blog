@@ -1,5 +1,6 @@
 package mroki.api.com.blog.repository.impl;
 
+import mroki.api.com.blog.dto.request.GetPostHomePageRequest;
 import mroki.api.com.blog.model.Comment;
 import mroki.api.com.blog.model.Comment_;
 import mroki.api.com.blog.model.Post;
@@ -19,7 +20,7 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
     private EntityManager entityManager;
 
     @Override
-    public List<PostHomePageProjection> findPostsCustom(int size, int page, String sort, Boolean isAscending, String title, Boolean publish) {
+    public List<PostHomePageProjection> findPostsCustom(GetPostHomePageRequest request) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<PostHomePageProjection> criteriaQuery = criteriaBuilder.createQuery(PostHomePageProjection.class);
         Root<Post> root = criteriaQuery.from(Post.class);
@@ -31,30 +32,29 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
             root.get(Post_.CREATED_AT),
             criteriaBuilder.avg(joinComment.get(Comment_.RATE))
         );
-        criteriaQuery.groupBy(root.get(Post_.ID));
         Predicate titleEqual = criteriaBuilder.like(
             criteriaBuilder.function("unaccent", String.class,
-                criteriaBuilder.lower(root.get(Post_.TITLE))), "%" + StringUtils.stripAccents(title) + "%");
+                criteriaBuilder.lower(root.get(Post_.TITLE))), "%" + StringUtils.stripAccents(request.getTitle()) + "%");
         criteriaQuery.groupBy(joinComment.get(Comment_.ID));
-        Predicate publishEqual = criteriaBuilder.equal(root.get(Post_.PUBLISH), publish);
+        Predicate publishEqual = criteriaBuilder.equal(root.get(Post_.PUBLISH), request.getPublish());
         List<Order> orderList = new ArrayList();
 
-        if (isAscending) {
-            orderList.add(criteriaBuilder.asc(root.get(sort)));
+        if (request.getAsc()) {
+            orderList.add(criteriaBuilder.asc(root.get(request.getSort())));
         } else {
-            orderList.add(criteriaBuilder.desc(root.get(sort)));
+            orderList.add(criteriaBuilder.desc(root.get(request.getSort())));
         }
 
         criteriaQuery.where(titleEqual, publishEqual).orderBy(orderList);
         return entityManager.createQuery(criteriaQuery)
-            .setMaxResults(size)
-            .setFirstResult(page == 0 ? 0 : (page - 1) * size)
+            .setMaxResults(request.getSize())
+            .setFirstResult(request.getPage() == 0 ? 0 : (request.getPage() - 1) * request.getPage())
             .getResultList();
 
     }
 
     @Override
-    public List<PostHomePageProjection> findPostsCustomForTest(int size, int page, String sort, Boolean isAscending, String title, Boolean publish) {
+    public List<PostHomePageProjection> findPostsCustomForTest(GetPostHomePageRequest request) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<PostHomePageProjection> criteriaQuery = criteriaBuilder.createQuery(PostHomePageProjection.class);
         Root<Post> root = criteriaQuery.from(Post.class);
@@ -66,24 +66,22 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
             root.get(Post_.CREATED_AT),
             criteriaBuilder.avg(joinComment.get(Comment_.RATE))
         );
-        criteriaQuery.groupBy(root.get(Post_.ID));
         Predicate titleEqual = criteriaBuilder.like(
-            criteriaBuilder.lower(root.get(Post_.TITLE)), "%" + StringUtils.stripAccents(title) + "%");
-        criteriaQuery.groupBy(joinComment.get(Comment_.ID));
-        Predicate publishEqual = criteriaBuilder.equal(root.get(Post_.PUBLISH), publish);
+            criteriaBuilder.lower(root.get(Post_.TITLE)), "%" + StringUtils.stripAccents(request.getTitle()) + "%");
+        Predicate publishEqual = criteriaBuilder.equal(root.get(Post_.PUBLISH), request.getPublish());
         criteriaQuery.groupBy(joinComment.get(Comment_.ID));
         List<Order> orderList = new ArrayList();
 
-        if (isAscending) {
-            orderList.add(criteriaBuilder.asc(root.get(sort)));
+        if (request.getAsc()) {
+            orderList.add(criteriaBuilder.asc(root.get(request.getSort())));
         } else {
-            orderList.add(criteriaBuilder.desc(root.get(sort)));
+            orderList.add(criteriaBuilder.desc(root.get(request.getSort())));
         }
 
         criteriaQuery.where(titleEqual, publishEqual).orderBy(orderList);
         return entityManager.createQuery(criteriaQuery)
-            .setMaxResults(size)
-            .setFirstResult(page == 0 ? 0 : (page - 1) * size)
+            .setMaxResults(request.getSize())
+            .setFirstResult(request.getPage() == 0 ? 0 : (request.getPage() - 1) * request.getPage())
             .getResultList();
 
     }
