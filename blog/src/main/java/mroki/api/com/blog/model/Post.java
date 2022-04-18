@@ -36,6 +36,6 @@ public class Post {
     @ManyToMany
     @JoinTable(name = "product_tag")
     private List<Tag> tags;
-    @OneToMany
+    @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 }

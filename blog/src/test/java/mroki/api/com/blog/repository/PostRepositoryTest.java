@@ -14,7 +14,7 @@ class PostRepositoryTest {
 
     @Test
     public void findPostsTest(){
-        System.out.println(p);
+        System.out.println(postRepository.findPostsCustomForTest(1,0,"id",true , "first" , true).get(0).getRate());
 
     }
 

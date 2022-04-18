@@ -11,5 +11,5 @@ public class PostHomePageProjection {
     Long id;
     String title;
     LocalDate createdAt;
-    Float rate;
+    Double rate;
 }

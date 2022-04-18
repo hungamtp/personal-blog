@@ -22,6 +22,10 @@ public class Comment {
     private Long id;
     private String content;
     private Integer rate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Post post;
+
     @ManyToOne
     private User user;
 
