@@ -1,4 +1,4 @@
-package mroki.api.com.blog.dto.auth;
+package mroki.api.com.blog.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

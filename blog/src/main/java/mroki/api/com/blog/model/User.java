@@ -2,16 +2,9 @@ package mroki.api.com.blog.model;
 
 
 import lombok.*;
-import mroki.api.com.blog.enums.Gender;
-import mroki.api.com.blog.generator.StaffCodeGenerator;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Collection;
 
 @Entity
 @Table(	name = "users",

@@ -29,7 +29,7 @@ public class UserDetailsImpl implements UserDetails {
 		return new UserDetailsImpl(user.getId(), user.getUsername(),
             user.getPassword(), user.getFirstName(), user.getLastName(),
             user.getDateOfBirth(), user.getGender(),
-            user.getRole().getRoleName().name(), user.getIsActivate()
+            user.getRole().getName(), user.getIsActivate()
         );
 	}
 

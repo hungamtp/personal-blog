@@ -10,5 +10,4 @@ import lombok.*;
 public class ResponseDTO {
     private String errorCode;
     private Object data;
-    private String successCode;
 }

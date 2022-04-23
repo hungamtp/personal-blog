@@ -1,4 +1,4 @@
-package mroki.api.com.blog.dto.request.response;
+package mroki.api.com.blog.dto.response;
 
 import lombok.*;
 

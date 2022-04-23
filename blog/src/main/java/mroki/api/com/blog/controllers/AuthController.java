@@ -1,22 +1,19 @@
 package mroki.api.com.blog.controllers;
 
-import mroki.api.com.blog.constants.SuccessCode;
-import mroki.api.com.blog.dto.auth.JwtResponse;
-import mroki.api.com.blog.dto.auth.LoginRequest;
-import mroki.api.com.blog.dto.auth.SignUpRequest;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import mroki.api.com.blog.dto.request.JwtResponse;
+import mroki.api.com.blog.dto.request.LoginRequest;
 import mroki.api.com.blog.dto.common.ResponseDTO;
 import mroki.api.com.blog.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -39,7 +36,6 @@ public class AuthController {
 		JwtResponse response = authService.signIn(loginRequest);
 		ResponseDTO dto = new ResponseDTO();
 		dto.setData(response);
-		dto.setSuccessCode(SuccessCode.USER_LOGIN_SUCCESS);
 		return ResponseEntity.ok().body(dto);
 	}
 

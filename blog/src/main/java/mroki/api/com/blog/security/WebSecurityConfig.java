@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -58,13 +59,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable()
 				.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-				.authorizeRequests().antMatchers("/public/**").permitAll()
-				.antMatchers("/login", "/fakesignup", "/home").permitAll()
-				.antMatchers("/api/swagger-ui.html/**").permitAll()
-				.anyRequest().authenticated();
+				.authorizeRequests()
+            .antMatchers("/public/**").permitAll()
+            .antMatchers("/login").permitAll()
+            .anyRequest().authenticated();
 
 		// http.headers().frameOptions().disable();
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        super.configure(web);
+        web.ignoring().antMatchers("/api/swagger-ui.html");
+    }
 }

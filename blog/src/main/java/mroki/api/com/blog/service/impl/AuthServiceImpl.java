@@ -2,13 +2,9 @@ package mroki.api.com.blog.service.impl;
 
 
 import mroki.api.com.blog.constants.ErrorCode;
-import mroki.api.com.blog.dto.auth.JwtResponse;
-import mroki.api.com.blog.dto.auth.LoginRequest;
-import mroki.api.com.blog.dto.auth.SignUpRequest;
-import mroki.api.com.blog.enums.Gender;
+import mroki.api.com.blog.dto.request.JwtResponse;
+import mroki.api.com.blog.dto.request.LoginRequest;
 import mroki.api.com.blog.exception.custom.ApiRequestException;
-import mroki.api.com.blog.model.Role;
-import mroki.api.com.blog.model.User;
 import mroki.api.com.blog.repository.RoleRepository;
 import mroki.api.com.blog.repository.UserRepository;
 import mroki.api.com.blog.security.jwt.JwtUtils;
@@ -22,7 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 

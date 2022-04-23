@@ -1,8 +1,6 @@
 package mroki.api.com.blog.converter;
 
 
-import mroki.api.com.blog.dto.role.RoleDTO;
-import mroki.api.com.blog.model.Role;
 import org.springframework.stereotype.Component;
 
 @Component

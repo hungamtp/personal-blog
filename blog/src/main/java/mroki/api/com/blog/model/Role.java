@@ -1,7 +1,6 @@
 package mroki.api.com.blog.model;
 
 import lombok.*;
-import mroki.api.com.blog.enums.ERole;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -9,7 +8,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "roles",
 		indexes ={
-				@Index(name = "role_idx" , columnList = "rolename")
+				@Index(name = "role_idx" , columnList = "name")
 		}
 )
 @NoArgsConstructor
@@ -20,12 +19,10 @@ import java.util.Collection;
 public class Role {
 	@Id
 	@GeneratedValue
-	@Column(name = "roleid")
+	@Column(name = "roleId")
 	private Long id;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "rolename", nullable = false)
-	private ERole roleName;
+	private String name;
 
 	@OneToMany(mappedBy = "role")
 	private Collection<User> users;
