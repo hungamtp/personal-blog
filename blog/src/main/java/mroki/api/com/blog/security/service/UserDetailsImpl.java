@@ -1,40 +1,35 @@
 package mroki.api.com.blog.security.service;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
-
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import mroki.api.com.blog.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 
 @Getter
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 
-    private String staffCode;
+    private Long id;
     private String username;
     private String password;
     private String firstName;
     private  String lastName;
-    private LocalDateTime dateOfBirth;
-    private LocalDateTime joinedDate;
+    private LocalDate dateOfBirth;
     private String gender;
     private String role;
-    private Boolean firstLogin;
-    private Boolean isDeleted;
+    private Boolean isActivate;
 
     public static UserDetailsImpl build(User user) {
-		return new UserDetailsImpl(user.getStaffCode(), user.getUsername(),
+		return new UserDetailsImpl(user.getId(), user.getUsername(),
             user.getPassword(), user.getFirstName(), user.getLastName(),
-            user.getDateOfBirth(), user.getJoinedDate(), user.getGender().name(),
-            user.getRole().getRoleName().name(),
-            user.getFirstLogin(), user.getIsDeleted()
+            user.getDateOfBirth(), user.getGender(),
+            user.getRole().getRoleName().name(), user.getIsActivate()
         );
 	}
 
@@ -71,7 +66,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return !this.isDeleted;
+        return this.isActivate;
     }
 
 }

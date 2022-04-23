@@ -9,18 +9,22 @@ import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
 @Table(	name = "users",
 		uniqueConstraints = {
-			@UniqueConstraint(columnNames = "staffcode"),
-			@UniqueConstraint(columnNames = "username")
+			@UniqueConstraint(columnNames = "username"),
+			@UniqueConstraint(columnNames = "email")
 		},
 		indexes ={
-			@Index(name = "user_role_idx" , columnList = "roleid"),
-				@Index(name = "user_username_idx" , columnList = "username")
+			@Index(name = "user_role_idx" , columnList = "roleId"),
+				@Index(name = "user_username_idx" , columnList = "username"),
+				@Index(name = "user_isActivate_idx" , columnList = "isActivate"),
+				@Index(name = "user_email_idx" , columnList = "email"),
+				@Index(name = "user_isVerifiedEmail_idx" , columnList = "isVerifiedEmail"),
 		})
 @Setter
 @Getter
@@ -29,51 +33,23 @@ import java.util.Collection;
 @Builder
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "staffcode_generator")
-	@GenericGenerator(
-		name = "staffcode_generator",
-		strategy = "mroki.api.com.blog.generator.StaffCodeGenerator",
-		parameters = {
-				@Parameter(name = StaffCodeGenerator.INCREMENT_PARAM, value = "0"),
-				@Parameter(name = StaffCodeGenerator.VALUE_PREFIX_PARAMETER, value = "SD"),
-				@Parameter(name = StaffCodeGenerator.NUMBER_FORMAT_PARAMETER, value = "%04d") })
-	@Column(name = "staffcode")
-	private String staffCode;
+	@GeneratedValue
+	private Long id;
 
-	@NotBlank
-	@Column(name = "username")
 	private String username;
-
-	@NotBlank
-	@Column(name = "password")
 	private String password;
-
-	@Column(name = "firstname")
 	private String firstName;
-
-	@Column(name = "lastname")
 	private String lastName;
+	private String email;
+	private Boolean isVerifiedEmail;
+	private LocalDate dateOfBirth;
+	private String gender;
+    private Boolean isActivate;
 
-	@Column(name = "dateofbirth")
-	private LocalDateTime dateOfBirth;
-
-	@Column(name = "joineddate")
-	private LocalDateTime joinedDate;
-
-	@Enumerated(EnumType.STRING)
-	@Column(name = "gender")
-	private Gender gender;
-
-
-	@ManyToOne
-	@JoinColumn(name = "roleid", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "roleId")
 	private Role role;
 
-	@Column(name = "firstlogin")
-	private Boolean firstLogin;
-
-	@Column(name = "isdeleted")
-	private Boolean isDeleted;
 
 
 }

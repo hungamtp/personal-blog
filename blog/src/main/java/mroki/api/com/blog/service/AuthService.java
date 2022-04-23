@@ -8,6 +8,4 @@ import mroki.api.com.blog.dto.auth.SignUpRequest;
 public interface AuthService {
 
     public JwtResponse signIn(LoginRequest loginRequest);
-
-    public String fakeSignUp(SignUpRequest signUpRequest);
 }

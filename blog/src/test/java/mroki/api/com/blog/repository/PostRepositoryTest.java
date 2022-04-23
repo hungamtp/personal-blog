@@ -32,14 +32,7 @@ class PostRepositoryTest {
         Assertions.assertEquals(result.get(0).getRate(), 5);
 
     }
-//    private CommonRequest createCommonRequest(){
-//        return CommonRequest.builder()
-//            .page(0)
-//            .size(2)
-//            .asc(true)
-//            .sort("id")
-//            .build();
-//    }
+
 
 
 }

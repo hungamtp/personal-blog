@@ -33,6 +33,9 @@ public class Post {
     private LocalDate createdAt;
     private LocalDate editedAt;
     private Boolean publish;
+    private Boolean isSlide;
+    @Lob
+    private byte[] image;
     @ManyToMany
     @JoinTable(name = "product_tag")
     private List<Tag> tags;

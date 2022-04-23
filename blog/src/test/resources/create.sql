@@ -6,6 +6,7 @@ create table post
     createdAt timestamp,
     editedAt  timestamp,
     publish   number(1, 0),
+    isSlide   number(1, 0),
     primary key (id)
 );
 
@@ -18,6 +19,7 @@ create table comment
     primary key (id),
     foreign key (post_id) references post (id)
 );
+
 
 ALTER TABLE comment
     ADD FOREIGN KEY (post_id)

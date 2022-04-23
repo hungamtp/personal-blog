@@ -43,15 +43,4 @@ public class AuthController {
 		return ResponseEntity.ok().body(dto);
 	}
 
-	@Operation(summary = "Test call api", description = "", tags = { "AUTH" })
-	@ApiResponses(value = { @ApiResponse(responseCode = "2xx", description = "Successfull"),
-			@ApiResponse(responseCode = "400", description = "Bad request"),
-			@ApiResponse(responseCode = "401", description = "Unauthorized"),
-			@ApiResponse(responseCode = "403", description = "Forbidden"),
-			@ApiResponse(responseCode = "404", description = "Not found"),
-			@ApiResponse(responseCode = "500", description = "Internal Server Error") })
-	@GetMapping("/home")
-	public String getHome() {
-		return "<h1>Home</h1>";
-	}
 }

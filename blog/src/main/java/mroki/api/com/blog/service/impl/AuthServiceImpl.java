@@ -61,45 +61,8 @@ public class AuthServiceImpl implements AuthService {
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return new JwtResponse(jwt, userDetails.getStaffCode(),
-            userDetails.getUsername(), roles.get(0), userDetails.getFirstLogin());
-    }
-
-    @Override
-    public String fakeSignUp(SignUpRequest signUpRequest) {
-        String staffCode = signUpRequest.getStaffcode();
-        String username = signUpRequest.getUsername();
-        String password = signUpRequest.getPassword();
-        String firstName = signUpRequest.getFirstname();
-        String lastName = signUpRequest.getLastname();
-        Long idRole = signUpRequest.getIdRole();
-        Long idLocation = signUpRequest.getIdLocation();
-
-        Role role = roleRepository.findById(idRole).get();
-
-        // Optional<Role> role = roleRepository.findById(1L);
-        // Optional<Location>  location = locationRepository.findById(1L);
-        LocalDateTime current = LocalDateTime.now();
-        User user = new User();
-        user.setStaffCode(staffCode);
-        user.setUsername(username);
-        user.setPassword(encoder.encode(password));
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setGender(Gender.Male);
-        user.setDateOfBirth(current);
-        user.setJoinedDate(current);
-        user.setRole(role);
-        user.setFirstLogin(false);
-        user.setIsDeleted(false);
-
-        user = userRepository.save(user);
-        if(user != null) {
-            return "OK";
-        }
-        else{
-            return "ERROR";
-        }
+        return new JwtResponse(jwt, userDetails.getId(),
+            userDetails.getUsername(), roles.get(0));
     }
 
 }

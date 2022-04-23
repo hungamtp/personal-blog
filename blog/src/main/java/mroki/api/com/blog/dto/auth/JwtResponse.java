@@ -8,20 +8,17 @@ import lombok.Setter;
 public class JwtResponse {
 	private String token;
 	private String type = "Bearer";
-	private String staffCode;
+	private Long id;
 	private String username;
 	private String role;
-	private Boolean firstLogin;
 
 	public JwtResponse(String token,
-					String staffCode,
+					Long id,
 					String username,
-					String role,
-					Boolean firstLogin) {
+					String role) {
 		this.token = token;
-		this.staffCode = staffCode;
+		this.id = id;
 		this.username = username;
 		this.role = role;
-		this.firstLogin = firstLogin;
 	}
 }

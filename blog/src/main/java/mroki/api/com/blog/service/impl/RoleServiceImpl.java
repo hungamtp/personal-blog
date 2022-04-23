@@ -16,10 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class RoleServiceImpl implements RoleService {
 
-    @Autowired
     private final RoleRepository repository;
-
-    @Autowired
     private final RoleConverter converter;
 
 }
